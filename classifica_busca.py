@@ -4,7 +4,8 @@ import pandas as pd
 # Teste Inicial:
 # home, busca,logado ==> comprou
 
-data_frame = pd.read_csv('buscas2.csv')
+data_frame = pd.read_csv('busca.csv')
+#data_frame = pd.read_csv('buscas2.csv')
 
 X_df = data_frame[['home','busca','logado']]
 Y_df = data_frame['comprou']
@@ -26,9 +27,12 @@ treino_marcacoes = Y[:tamanho_de_treino]
 teste_dados     = X[-tamanho_de_teste:]
 teste_marcacoes = Y[-tamanho_de_teste:]
 
-from sklearn.naive_bayes import MultinomialNB
+#from sklearn.naive_bayes import MultinomialNB
 
-modelo = MultinomialNB()
+#modelo = MultinomialNB()
+
+from sklearn.ensemble import AdaBoostClassifier
+modelo = AdaBoostClassifier()
 
 modelo.fit(treino_dados, treino_marcacoes)
 
@@ -44,13 +48,14 @@ total_de_elementos = len(teste_dados)
 taxa_de_acertos = 100.0 * total_de_acertos / total_de_elementos
 
 
-print('Minha taxa de acertos utilizando MultinomialNB foi {} %'.format(taxa_de_acertos))
-print('Meu total de acertos foi {} registros do universo total de {} registros'.format(total_de_acertos, tamanho_de_teste))
+#print('Minha taxa de acertos utilizando MultinomialNB foi {} %'.format(taxa_de_acertos))
+print('Minha taxa de acertos utilizando AdaBoostClassifier foi {} % \n'.format(taxa_de_acertos))
+print('   Meu total de acertos foi {} registros do universo total de {} registros'.format(total_de_acertos, tamanho_de_teste))
 
 # Eficiencia do algoritmo que chuta tudo 1 ou 0 - Algoritmo Base
 acerto_base = max(Counter(teste_marcacoes).itervalues())
 tx_acerto_base = 100.0 * acerto_base / len(teste_marcacoes)
 
-print('Taxa de acertos do Algoritmo Base {} % \n'.format(tx_acerto_base))
+print('   Taxa de acertos do Algoritmo Base {} % \n'.format(tx_acerto_base))
 
 
